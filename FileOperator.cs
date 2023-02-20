@@ -11,6 +11,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
     {
         protected static string path;
         public List<Client> ClientsBase = new List<Client>();
+        public List<Account> AccountsBase = new List<Account>();
 
         public FileOperator(string Path)
         {
@@ -36,11 +37,11 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                     {
                         if (sums[i+1] == "депозит")
                         {
-                            newClient.clientAccounts.Add(new Deposit(int.Parse(sums[i]), sums[i + 1], double.Parse(sums[i + 2])));
+                            AccountsBase.Add(new Deposit(int.Parse(sums[i]), sums[i + 1], double.Parse(sums[i + 2])));
                         }
                         else if (sums[i+1] == "текущий")
                         {
-                            newClient.clientAccounts.Add(new Current(int.Parse(sums[i]), sums[i + 1], double.Parse(sums[i + 2])));
+                            AccountsBase.Add(new Current(int.Parse(sums[i]), sums[i + 1], double.Parse(sums[i + 2])));
                         }
                     }
                 }

@@ -13,7 +13,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         protected static string path;
 
         public List<Client> Clients;
-        public List<Account> Accounts;
+        public List<Account> ClientsAccounts = new List<Account>();
 
         public Repository(string Path)
         {
@@ -21,10 +21,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             FileOper = new FileOperator(Path);
             FileOper.GetInfoFromFile();
             Clients = FileOper.ClientsBase;
-            foreach (var item in Clients)
-            {
-                Accounts.Add(item.clientAccounts);
-            }
+            ClientsAccounts = FileOper.AccountsBase;
         }
 
         public static Repository CreateRepository(string Path)

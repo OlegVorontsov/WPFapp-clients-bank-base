@@ -12,7 +12,6 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         public string surname { get; set; }
         public string name { get; set; }
         public string patronymic { get; set; }
-        public List<Account> clientAccounts { get; set; }
 
         public Client(int ClientId, string Surname, string Name, string Patronymic)
         {
@@ -20,7 +19,6 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             this.surname = Surname;
             this.name = Name;
             this.patronymic = Patronymic;
-            this.clientAccounts = new List<Account>();
         }
     }
 }

@@ -17,7 +17,7 @@
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <TextBlock Text="{Binding surname}" />
+                        <TextBlock x:Name="clientSelect" Text="{Binding surname}" />
                         <TextBlock Text="{Binding name}" />
                         <TextBlock Text="{Binding patronymic}" />
                     </StackPanel>
@@ -31,7 +31,7 @@
 
         <Button Content="Обновить" Click="btnRef" Grid.Column="0"
                 Margin="10, 50, 10, 10" Width="300" Height="25" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
-        
+
         <ListView x:Name="listAccounts" Margin="10" Grid.Column="1">
             <ListView.View>
                 <GridView>
@@ -40,7 +40,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
 
     </Grid>
 </Window>

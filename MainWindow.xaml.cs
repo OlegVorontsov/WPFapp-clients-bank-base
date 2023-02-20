@@ -22,6 +22,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
     {
         static string Path = "База.txt";
         static Repository data;
+        static string clientSelected = string.Empty;
         public MainWindow()
         {
             InitializeComponent();
@@ -38,10 +39,12 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
 
         private void clientsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            listAccounts.ItemsSource = data.Accounts.Where(find);
+            listAccounts.ItemsSource = data.ClientsAccounts.Where(find);
+            clientSelected = clientSelect.Text.ToString();
+            clientSelected = (clientsList.SelectedValue as clientSelect).Text;
         }
 
-        private bool find(Account arg)
+        private bool find (Account arg)
         {
             return arg.ClientId == (clientsList.SelectedItem as Client).clientId;
         }
