@@ -6,27 +6,45 @@ using System.Threading.Tasks;
 
 namespace _12._5_HomeWork_WPFapp_clients_bank_base
 {
-    abstract class Account
+    class Account
     {
-        public int ClientId { get; private set; }
+        public int clientId { get; private set; }
+        public int accountId { get; set; }
         public string typeAccount { get; set; }
         public double sum { get; set; }
 
-        public Account(int ClientId, string TypeAccount, double Sum)
+        private static Random rand;
+
+        private static int randomID()
         {
-            this.ClientId = ClientId;
+            return rand.Next(9999);
+        }
+
+        public Account(int ClientId, int AccountId, string TypeAccount, double Sum)
+        {
+            rand = new Random();
+            this.clientId = ClientId;
+            if (AccountId == 0)
+            {
+                this.accountId = randomID();
+            }
+            else
+            {
+                this.accountId = AccountId;
+            }
             this.typeAccount = TypeAccount;
             this.sum = Sum;
         }
     }
 
+
     class Deposit : Account
     {
-        public Deposit(int ClientId, string TypeAccount, double Sum) : base(ClientId, TypeAccount, Sum) { }
+        public Deposit(int ClientId, int AccountId, string TypeAccount, double Sum) : base(ClientId, AccountId, TypeAccount, Sum) { }
     }
 
     class Current : Account
     {
-        public Current(int ClientId, string TypeAccount, double Sum) : base(ClientId, TypeAccount, Sum) { }
+        public Current(int ClientId, int AccountId, string TypeAccount, double Sum) : base(ClientId, AccountId, TypeAccount, Sum) { }
     }
 }
