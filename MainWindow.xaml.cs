@@ -25,6 +25,9 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         static Repository data;
         static int clientSelectedId;
         static Account accountSelected;
+        static Account accountSource;
+        static Account accountDestination;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -70,11 +73,33 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             string Result = data.closeAccount(accountSelected);
             resultOfCloseAccount.Text = Result;
         }
+        //выбор счетов для перевода
+        private void acceptAccountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            if (accountSource == null)
+            {
+                accountSource = accountSelected;
+                accountIdToGetSum.Text = accountSource.accountId.ToString();
+            }
+            else
+            {
+                accountDestination = accountSelected;
+                accountIdToPutSum.Text = accountDestination.accountId.ToString();
+            }
+        }
+        //очистка выбранных счетов для перевода
+        private void clearAccountsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            accountSource = null;
+            accountDestination = null;
+            accountIdToGetSum.Text = null;
+            accountIdToPutSum.Text = null;
+        }
+
 
         private void transferSumBtn_Click(object sender, RoutedEventArgs e)
         {
-            Account accountTarget = listAccounts.SelectedItem as Account;
-            string Result = data.transferSumBetweenAccounts(accountSelected, accountTarget, double.Parse(sumToTransfer.Text));
+            string Result = data.transferSumBetweenAccounts(accountSource, accountDestination, double.Parse(sumToTransfer.Text));
             resultOfCloseAccount.Text = Result;
         }
 

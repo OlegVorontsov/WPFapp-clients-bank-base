@@ -71,6 +71,13 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             return result;
         }
 
+        /// <summary>
+        /// Перевод между счетами
+        /// </summary>
+        /// <param name="AccountToGetSum"></param>
+        /// <param name="AccountToPutSum"></param>
+        /// <param name="Sum"></param>
+        /// <returns></returns>
         public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
         {
             string result = FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum);
