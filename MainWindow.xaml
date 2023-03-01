@@ -6,11 +6,11 @@
         xmlns:local="clr-namespace:_12._5_HomeWork_WPFapp_clients_bank_base"
         xmlns:System="clr-namespace:System;assembly=System.Runtime" x:Class="_12._5_HomeWork_WPFapp_clients_bank_base.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="1000">
+        Title="MainWindow" Height="450" Width="730">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="7*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Выбор клиента:" 
@@ -25,9 +25,6 @@
         <Button Content="текущий" x:Name="openCurrentBtn"
                 HorizontalAlignment="Left" Margin="185,70,0,0" VerticalAlignment="Top" FontSize="14" Width="70" Height="25" Click="openCurrentBtn_Click"/>
 
-        <TextBox Grid.Column="0" x:Name="resultOfOpenAccount"
-                 HorizontalAlignment="Left" Margin="265, 70, 0, 0" Width="110" Height="25" VerticalAlignment="Top"/>
-
         <TextBlock Text="Закрыть счет:" 
             HorizontalAlignment="Left" Margin="10, 115, 10, 10" VerticalAlignment="Top" FontSize="14"/>
 
@@ -36,48 +33,57 @@
                  Text="{Binding SelectedItem.accountId, ElementName=listAccounts, Mode=TwoWay}" />
 
         <TextBlock Text="Выбор счета для перевода:" 
-            HorizontalAlignment="Left" Margin="10, 155, 10, 10" VerticalAlignment="Top" FontSize="14"/>
+            HorizontalAlignment="Left" Margin="10, 195, 10, 10" VerticalAlignment="Top" FontSize="14"/>
 
         <TextBox Grid.Column="0" x:Name="accountIdСhosen"
-                 HorizontalAlignment="Left" Margin="190, 150, 10, 10" Width="70" Height="25" VerticalAlignment="Top"
+                 HorizontalAlignment="Left" Margin="190, 190, 10, 10" Width="70" Height="25" VerticalAlignment="Top"
                  Text="{Binding SelectedItem.accountId, ElementName=listAccounts}" />
 
         <Button Content="Подтв." x:Name="acceptAccountBtn"
-                HorizontalAlignment="Left" Margin="270,150,0,0" VerticalAlignment="Top" FontSize="14" Width="50" Height="25" Click="acceptAccountBtn_Click" />
+                HorizontalAlignment="Left" Margin="270,190,0,0" VerticalAlignment="Top" FontSize="14" Width="50" Height="25" Click="acceptAccountBtn_Click" />
 
         <Button Content="Очистить" x:Name="clearAccountsBtn"
-                HorizontalAlignment="Left" Margin="330,150,0,0" VerticalAlignment="Top" FontSize="14" Width="70" Height="25" Click="clearAccountsBtn_Click" />
+                HorizontalAlignment="Left" Margin="330,190,0,0" VerticalAlignment="Top" FontSize="14" Width="70" Height="25" Click="clearAccountsBtn_Click" />
 
         <Button Content="Закрыть" x:Name="closeAccountBtn"
                 HorizontalAlignment="Left" Margin="185,110,0,0" VerticalAlignment="Top" FontSize="14" Width="70" Height="25" Click="closeAccountBtn_Click" />
 
-        <TextBox Grid.Column="0" x:Name="resultOfCloseAccount"
-                 HorizontalAlignment="Left" Margin="265, 110, 0, 0" Width="110" Height="25" VerticalAlignment="Top"/>
+        <TextBlock Text="Пополнить счет:" 
+            HorizontalAlignment="Left" Margin="10, 155, 10, 10" VerticalAlignment="Top" FontSize="14"/>
+
+        <TextBox Grid.Column="0" x:Name="accountIdToAddition"
+                 HorizontalAlignment="Left" Margin="120, 150, 10, 10" Width="70" Height="25" VerticalAlignment="Top"
+                 Text="{Binding SelectedItem.accountId, ElementName=listAccounts, Mode=TwoWay}" />
+
+        <TextBlock Text="на сумму:" 
+            HorizontalAlignment="Left" Margin="195, 155, 10, 10" VerticalAlignment="Top" FontSize="14"/>
+
+        <TextBox Grid.Column="0" x:Name="sumToAddition"
+                 HorizontalAlignment="Left" Margin="265, 150, 10, 10" Width="70" Height="25" VerticalAlignment="Top"/>
+
+        <Button Content="Пополнить" x:Name="additionAccountBtn"
+                HorizontalAlignment="Left" Margin="345,150,0,0" VerticalAlignment="Top" FontSize="14" Width="80" Height="25" Click="additionAccountBtn_Click" />
 
         <TextBlock Text="Перевести со счета:" 
-            HorizontalAlignment="Left" Margin="10, 195, 10, 10" VerticalAlignment="Top" FontSize="14"/>
-
-        <TextBox Grid.Column="0" x:Name="accountIdToGetSum"
-                 HorizontalAlignment="Left" Margin="145, 190, 10, 10" Width="70" Height="25" VerticalAlignment="Top"/>
-
-        <TextBlock Text="на счет:" 
-            HorizontalAlignment="Left" Margin="225, 195, 10, 10" VerticalAlignment="Top" FontSize="14"/>
-
-        <TextBox Grid.Column="0" x:Name="accountIdToPutSum"
-                 HorizontalAlignment="Left" Margin="280, 190, 10, 10" Width="70" Height="25" VerticalAlignment="Top"/>
-
-        <TextBlock Text="сумму:" 
             HorizontalAlignment="Left" Margin="10, 235, 10, 10" VerticalAlignment="Top" FontSize="14"/>
 
+        <TextBox Grid.Column="0" x:Name="accountIdToGetSum"
+                 HorizontalAlignment="Left" Margin="145, 230, 10, 10" Width="70" Height="25" VerticalAlignment="Top"/>
+
+        <TextBlock Text="на счет:" 
+            HorizontalAlignment="Left" Margin="225, 235, 10, 10" VerticalAlignment="Top" FontSize="14"/>
+
+        <TextBox Grid.Column="0" x:Name="accountIdToPutSum"
+                 HorizontalAlignment="Left" Margin="280, 230, 10, 10" Width="70" Height="25" VerticalAlignment="Top"/>
+
+        <TextBlock Text="сумму:" 
+            HorizontalAlignment="Left" Margin="10, 275, 10, 10" VerticalAlignment="Top" FontSize="14"/>
+
         <TextBox Grid.Column="0" x:Name="sumToTransfer"
-                 Margin="60, 230, 10, 10" Width="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 Text="{Binding SelectedItem.sum, ElementName=listAccounts}" />
+                 Margin="60, 270, 10, 10" Width="115" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
         <Button Content="Перевести" x:Name="transferSumBtn"
-                HorizontalAlignment="Left" Margin="185,230,0,0" VerticalAlignment="Top" FontSize="14" Width="70" Height="25" Click="transferSumBtn_Click"/>
-
-        <TextBox Grid.Column="0" x:Name="resultOfTransfer"
-                 HorizontalAlignment="Left" Margin="265, 230, 0, 0" Width="110" Height="25" VerticalAlignment="Top"/>
+                HorizontalAlignment="Left" Margin="185,270,0,0" VerticalAlignment="Top" FontSize="14" Width="75" Height="25" Click="transferSumBtn_Click"/>
 
         <ComboBox x:Name="clientsList" Grid.Column="0"
                   Margin="10, 35, 10, 10" Width="200" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="clientsList_SelectionChanged">
@@ -92,11 +98,12 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-
+        <TextBox Grid.Column="0" x:Name="resultOfOperation"
+                 HorizontalAlignment="Center" Margin="10, 100, 10, 45" Width="200" Height="25" VerticalAlignment="Bottom"/>
 
         <Button Content="Обновить" x:Name="RefreshBtn"
                 Grid.Column="0"
-                Margin="10, 50, 10, 10" Width="300" Height="25" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="RefreshBtn_Click" />
+                Margin="10" Width="200" Height="25" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="RefreshBtn_Click" />
 
         <ListView x:Name="listAccounts" Margin="10" Grid.Column="1" SelectionChanged="listAccounts_SelectionChanged">
             <ListView.View>

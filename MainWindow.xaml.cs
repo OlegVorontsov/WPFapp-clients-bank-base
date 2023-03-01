@@ -57,7 +57,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             var temp = openDepositBtn.Content;
             string TypeAccount = Convert.ToString(temp);
             string Result = data.openAccount(clientSelectedId, TypeAccount);
-            resultOfOpenAccount.Text = Result;
+            resultOfOperation.Text = Result;
         }
         //открытие текущего счета
         private void openCurrentBtn_Click(object sender, RoutedEventArgs e)
@@ -65,13 +65,13 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             var temp = openCurrentBtn.Content;
             string TypeAccount = Convert.ToString(temp);
             string Result = data.openAccount(clientSelectedId, TypeAccount);
-            resultOfOpenAccount.Text = Result;
+            resultOfOperation.Text = Result;
         }
         //закрытие счета
         private void closeAccountBtn_Click(object sender, RoutedEventArgs e)
         {
             string Result = data.closeAccount(accountSelected);
-            resultOfCloseAccount.Text = Result;
+            resultOfOperation.Text = Result;
         }
         //выбор счетов для перевода
         private void acceptAccountBtn_Click(object sender, RoutedEventArgs e)
@@ -95,12 +95,54 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             accountIdToGetSum.Text = null;
             accountIdToPutSum.Text = null;
         }
-
-
+        //перевод между счетами
         private void transferSumBtn_Click(object sender, RoutedEventArgs e)
         {
-            string Result = data.transferSumBetweenAccounts(accountSource, accountDestination, double.Parse(sumToTransfer.Text));
-            resultOfCloseAccount.Text = Result;
+            string Result = string.Empty;
+            double Sum;
+            if (double.TryParse(sumToTransfer.Text, out Sum))
+            {
+                if (Sum > 0)
+                {
+                    data.transferSumBetweenAccounts(accountSource, accountDestination, Sum);
+                    Result = "Деньги переведены";
+                    resultOfOperation.Text = Result;
+                }
+                else
+                {
+                    Result = "Введите число > 0";
+                    resultOfOperation.Text = Result;
+                }
+            }
+            else
+            {
+                Result = "Введите число";
+                resultOfOperation.Text = Result;
+            }
+        }
+        //пополнение счета
+        private void additionAccountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            string Result = string.Empty;
+            double Sum;
+            if (double.TryParse(sumToAddition.Text, out Sum))
+            {
+                if (Sum > 0)
+                {
+                    Result = data.additionAccount(accountSelected, Sum);
+                    resultOfOperation.Text = Result;
+                }
+                else
+                {
+                    Result = "Введите число > 0";
+                    resultOfOperation.Text = Result;
+                }
+            }
+            else
+            {
+                Result = "Введите число";
+                resultOfOperation.Text = Result;
+            }
         }
 
 

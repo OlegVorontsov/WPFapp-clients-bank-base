@@ -78,9 +78,21 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToPutSum"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
+        public void transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
         {
-            string result = FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum);
+            FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum);
+            FileOper.GetInfoFromFile();
+        }
+
+        /// <summary>
+        /// Пополнение счета
+        /// </summary>
+        /// <param name="AccountToAddition"></param>
+        /// <param name="Sum"></param>
+        /// <returns></returns>
+        public string additionAccount(Account AccountToAddition, double Sum)
+        {
+            string result = FileOper.additionAccount(AccountToAddition, Sum);
             FileOper.GetInfoFromFile();
             return result;
         }

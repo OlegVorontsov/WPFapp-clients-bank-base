@@ -7,12 +7,26 @@ using System.Threading.Tasks;
 
 namespace _12._5_HomeWork_WPFapp_clients_bank_base
 {
-    class FileOperator
+    interface IAdder<out T>
+    {
+        T additionAccount(Account AccountInWork, double Sum);
+    }
+
+    interface ITransfer<in T>
+    {
+        void transferSumBetweenAccounts(Account AccountStart, Account AccountTarget, double Sum);
+    }
+
+    class FileOperator : IAdder<string>, ITransfer<string>
     {
         protected static string path;
         public List<Client> ClientsBase = new List<Client>();
         public List<Account> AccountsBase = new List<Account>();
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="Path"></param>
         public FileOperator(string Path)
         {
             path = Path;
@@ -120,9 +134,34 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             return "Счет закрыт";
         }
 
-        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
+        /// <summary>
+        /// Перевод между счетами
+        /// </summary>
+        /// <param name="AccountToGetSum"></param>
+        /// <param name="AccountToPutSum"></param>
+        /// <param name="Sum"></param>
+        /// <returns></returns>
+        public void transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
         {
-            return "Деньги переведены";
+            if ((AccountToGetSum.sum - Sum) > 0)
+            {
+                AccountToGetSum.sum -= Sum;
+                AccountToPutSum.sum += Sum;
+                PutInfoIntoFile();
+            }
+        }
+
+        /// <summary>
+        /// Пополнение счета
+        /// </summary>
+        /// <param name="AccountToAddition"></param>
+        /// <param name="Sum"></param>
+        /// <returns></returns>
+        public string additionAccount(Account AccountInWork, double Sum)
+        {
+            AccountInWork.sum += Sum;
+            PutInfoIntoFile();
+            return "Счет пополнен";
         }
     }
 }

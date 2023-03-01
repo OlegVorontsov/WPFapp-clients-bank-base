@@ -35,16 +35,24 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             this.typeAccount = TypeAccount;
             this.sum = Sum;
         }
-    }
 
+        public Account (double Sum)
+        {
+            this.sum += Sum;
+        }
+    }
 
     class Deposit : Account
     {
         public Deposit(int ClientId, int AccountId, string TypeAccount, double Sum) : base(ClientId, AccountId, TypeAccount, Sum) { }
+
+        public Deposit(double Sum) : base(Sum) { }
     }
 
     class Current : Account
     {
         public Current(int ClientId, int AccountId, string TypeAccount, double Sum) : base(ClientId, AccountId, TypeAccount, Sum) { }
+
+        public Current(double Sum) : base(Sum) { }
     }
 }
