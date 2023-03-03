@@ -7,21 +7,13 @@ using System.Threading.Tasks;
 
 namespace _12._5_HomeWork_WPFapp_clients_bank_base
 {
-    interface IAdder<out T>
-    {
-        T additionAccount(Account AccountInWork, double Sum);
-    }
-
-    interface ITransfer<in T>
-    {
-        void transferSumBetweenAccounts(Account AccountStart, Account AccountTarget, double Sum);
-    }
-
-    class FileOperator : IAdder<string>, ITransfer<string>
+    class FileOperator
     {
         protected static string path;
         public List<Client> ClientsBase = new List<Client>();
         public List<Account> AccountsBase = new List<Account>();
+
+        public event Action<Account, string> AccountWasOpen;
 
         /// <summary>
         /// Конструктор
@@ -108,15 +100,19 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="ClientId"></param>
         /// <param name="TypeAccount"></param>
         /// <returns></returns>
-        public string openAccount(int ClientId, string TypeAccount)
+        public string openAccount(int ClientId, string TypeAccount, string Post)
         {
             if (TypeAccount == "депозит")
             {
-                AccountsBase.Add(new Deposit(ClientId, 0, TypeAccount, 0));
+                Account newAccount = new Deposit(ClientId, 0, TypeAccount, 0);
+                AccountsBase.Add(newAccount);
+                AccountWasOpen?.Invoke(newAccount, Post);
             }
             else if (TypeAccount == "текущий")
             {
-                AccountsBase.Add(new Current(ClientId, 0, TypeAccount, 0));
+                Account newAccount = new Current(ClientId, 0, TypeAccount, 0);
+                AccountsBase.Add(newAccount);
+                AccountWasOpen?.Invoke(newAccount, Post);
             }
             PutInfoIntoFile();
             return "Счет открыт";
@@ -141,13 +137,18 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToPutSum"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public void transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
+        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
         {
-            if ((AccountToGetSum.sum - Sum) > 0)
+            if ((AccountToGetSum.sum - Sum) >= 0)
             {
                 AccountToGetSum.sum -= Sum;
                 AccountToPutSum.sum += Sum;
                 PutInfoIntoFile();
+                return "Средства переведены";
+            }
+            else
+            {
+                return "Недостаточно средств";
             }
         }
 

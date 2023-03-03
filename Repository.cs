@@ -10,19 +10,24 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
     class Repository
     {
         protected static FileOperator FileOper;
-        protected static string path;
+        protected static Journal journal;
+
+        protected static string pathBase;
+        protected static string pathLog;
 
         public List<Client> Clients;
-        public List<Account> ClientsAccounts = new List<Account>();
+        public List<Account> ClientsAccounts;
 
         /// <summary>
         /// Конструктор репозитория
         /// </summary>
         /// <param name="Path"></param>
-        public Repository(string Path)
+        public Repository(string PathBase, string PathLog)
         {
-            path = Path;
-            FileOper = new FileOperator(Path);
+            pathBase = PathBase;
+            pathLog = PathLog;
+            FileOper = new FileOperator(PathBase);
+            journal = new Journal(PathLog, FileOper);
             FileOper.GetInfoFromFile();
             Clients = FileOper.ClientsBase;
             ClientsAccounts = FileOper.AccountsBase;
@@ -33,9 +38,18 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// </summary>
         /// <param name="Path"></param>
         /// <returns></returns>
-        public static Repository CreateRepository(string Path)
+        public static Repository CreateRepository(string PathBase, string PathLog)
         {
-            return new Repository(Path);
+            return new Repository(PathBase, PathLog);
+        }
+
+        /// <summary>
+        /// Создание журнала записей об операциях
+        /// </summary>
+        /// <returns></returns>
+        public static Journal CreateJournal()
+        {
+            return journal;
         }
 
         /// <summary>
@@ -44,7 +58,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="ClientId"></param>
         /// <param name="TypeAccount"></param>
         /// <returns></returns>
-        public string openAccount(int ClientId, string TypeAccount)
+        public string openAccount(int ClientId, string TypeAccount, string Post)
         {
             string result = string.Empty;
             if (ClientId == 0)
@@ -53,7 +67,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             }
             else
             {
-                result = FileOper.openAccount(ClientId, TypeAccount);
+                result = FileOper.openAccount(ClientId, TypeAccount, Post);
             }
             FileOper.GetInfoFromFile();
             return result;
@@ -78,10 +92,11 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToPutSum"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public void transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
+        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
         {
-            FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum);
+            string result = FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum);
             FileOper.GetInfoFromFile();
+            return result;
         }
 
         /// <summary>

@@ -6,15 +6,28 @@
         xmlns:local="clr-namespace:_12._5_HomeWork_WPFapp_clients_bank_base"
         xmlns:System="clr-namespace:System;assembly=System.Runtime" x:Class="_12._5_HomeWork_WPFapp_clients_bank_base.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="730">
+        Title="MainWindow" Height="450" Width="1000">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="11*"/>
-            <ColumnDefinition Width="7*"/>
+            <ColumnDefinition Width="16*"/>
+            <ColumnDefinition Width="8*"/>
+            <ColumnDefinition Width="12*"/>
         </Grid.ColumnDefinitions>
 
         <TextBlock Text="Выбор клиента:" 
-            HorizontalAlignment="Left" Margin="10" VerticalAlignment="Top" FontSize="14"/>
+            HorizontalAlignment="Left" Margin="220,10, 10, 10" VerticalAlignment="Top" FontSize="14"/>
+
+        <TextBlock Text="Выберете должность:"
+                       HorizontalAlignment="Left" FontSize="14"
+                       VerticalAlignment="Top"
+                       Margin="10" TextWrapping="Wrap"/>
+
+        <ComboBox x:Name="postSelector"
+                      HorizontalAlignment="Left"
+                      VerticalAlignment="Top"
+                      Margin="10,35,10,10"
+                      Height="25"
+                      Width="200" SelectionChanged="postSelector_SelectionChanged"/>
 
         <TextBlock Text="Открыть счет:" 
             HorizontalAlignment="Left" Margin="10, 75, 10, 10" VerticalAlignment="Top" FontSize="14"/>
@@ -86,7 +99,7 @@
                 HorizontalAlignment="Left" Margin="185,270,0,0" VerticalAlignment="Top" FontSize="14" Width="75" Height="25" Click="transferSumBtn_Click"/>
 
         <ComboBox x:Name="clientsList" Grid.Column="0"
-                  Margin="10, 35, 10, 10" Width="200" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="clientsList_SelectionChanged">
+                  Margin="220, 35, 10, 10" Width="200" Height="25" HorizontalAlignment="Left" VerticalAlignment="Top" SelectionChanged="clientsList_SelectionChanged">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -105,7 +118,7 @@
                 Grid.Column="0"
                 Margin="10" Width="200" Height="25" HorizontalAlignment="Center" VerticalAlignment="Bottom" Click="RefreshBtn_Click" />
 
-        <ListView x:Name="listAccounts" Margin="10" Grid.Column="1" SelectionChanged="listAccounts_SelectionChanged">
+        <ListView x:Name="listAccounts" Margin="5" Grid.Column="1" SelectionChanged="listAccounts_SelectionChanged">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Тип счета" DisplayMemberBinding="{Binding typeAccount}"/>
@@ -113,7 +126,19 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
+        <ListView x:Name="operationsList" Margin="5" Grid.Column="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Счет" DisplayMemberBinding="{Binding accountId}"/>
+                    <GridViewColumn Header="Операция" DisplayMemberBinding="{Binding operationType}"/>
+                    <GridViewColumn Header="Сумма" DisplayMemberBinding="{Binding operationSum}"/>
+                    <GridViewColumn Header="Дата/Время" DisplayMemberBinding="{Binding dateAndTime}"/>
+                    <GridViewColumn Header="Сотрудник" DisplayMemberBinding="{Binding post}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
 
 
 

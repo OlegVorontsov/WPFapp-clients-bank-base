@@ -20,6 +20,13 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             return rand.Next(9999);
         }
 
+        /// <summary>
+        /// Создание экземпляра счета
+        /// </summary>
+        /// <param name="ClientId"></param>
+        /// <param name="AccountId"></param>
+        /// <param name="TypeAccount"></param>
+        /// <param name="Sum"></param>
         public Account(int ClientId, int AccountId, string TypeAccount, double Sum)
         {
             rand = new Random();
@@ -35,24 +42,15 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             this.typeAccount = TypeAccount;
             this.sum = Sum;
         }
-
-        public Account (double Sum)
-        {
-            this.sum += Sum;
-        }
     }
 
     class Deposit : Account
     {
         public Deposit(int ClientId, int AccountId, string TypeAccount, double Sum) : base(ClientId, AccountId, TypeAccount, Sum) { }
-
-        public Deposit(double Sum) : base(Sum) { }
     }
 
     class Current : Account
     {
         public Current(int ClientId, int AccountId, string TypeAccount, double Sum) : base(ClientId, AccountId, TypeAccount, Sum) { }
-
-        public Current(double Sum) : base(Sum) { }
     }
 }
