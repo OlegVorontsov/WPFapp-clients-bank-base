@@ -42,28 +42,28 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             log = Repository.CreateJournal();
             operationsList.ItemsSource = log.Lines;
         }
-
+        //выбор должности
         private void postSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             postSelected = postSelector.SelectedValue.ToString();
         }
-
+        //вывод счетов выбранного клиента
         private void clientsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             clientSelectedId = (clientsList.SelectedItem as Client).clientId;
             listAccounts.ItemsSource = data.ClientsAccounts.Where(find);
         }
-
+        //выбор счета
         private void listAccounts_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             accountSelected = listAccounts.SelectedItem as Account;
         }
-
+        //метод поиска счетов клинте
         private bool find(Account arg)
         {
             return arg.clientId == (clientsList.SelectedItem as Client).clientId;
         }
-        //открытие депозитного счета
+        //открытие депозитного счета + запись в журнале
         private void openDepositBtn_Click(object sender, RoutedEventArgs e)
         {
             if (postSelected != string.Empty)
@@ -77,7 +77,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                 resultOfOperation.Text = "Выберете должность";
             }
         }
-        //открытие текущего счета
+        //открытие текущего счета + запись в журнале
         private void openCurrentBtn_Click(object sender, RoutedEventArgs e)
         {
             if (postSelected != string.Empty)
@@ -91,12 +91,12 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                 resultOfOperation.Text = "Выберете должность";
             }
         }
-        //закрытие счета
+        //закрытие счета + запись в журнале
         private void closeAccountBtn_Click(object sender, RoutedEventArgs e)
         {
             if (postSelected != string.Empty)
             {
-                string Result = data.closeAccount(accountSelected);
+                string Result = data.closeAccount(accountSelected, postSelected);
                 resultOfOperation.Text = Result;
             }
             else
@@ -126,7 +126,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             accountIdToGetSum.Text = null;
             accountIdToPutSum.Text = null;
         }
-        //перевод между счетами
+        //перевод между счетами + запись в журнале
         private void transferSumBtn_Click(object sender, RoutedEventArgs e)
         {
             if (postSelected != string.Empty)
@@ -136,7 +136,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                 {
                     if (Sum > 0)
                     {
-                        resultOfOperation.Text = data.transferSumBetweenAccounts(accountSource, accountDestination, Sum);
+                        resultOfOperation.Text = data.transferSumBetweenAccounts(accountSource, accountDestination, Sum, postSelected);
                     }
                     else
                     {
@@ -153,7 +153,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                 resultOfOperation.Text = "Выберете должность";
             }
         }
-        //пополнение счета
+        //пополнение счета + запись в журнале
         private void additionAccountBtn_Click(object sender, RoutedEventArgs e)
         {
             if (postSelected != string.Empty)
@@ -163,7 +163,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                 {
                     if (Sum > 0)
                     {
-                        resultOfOperation.Text = data.additionAccount(accountSelected, Sum);
+                        resultOfOperation.Text = data.additionAccount(accountSelected, Sum, postSelected);
                     }
                     else
                     {
@@ -180,10 +180,12 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                 resultOfOperation.Text = "Выберете должность";
             }
         }
-
-
+        //обновление списка счетов и журнала операций
         private void RefreshBtn_Click(object sender, RoutedEventArgs e)
         {
+            clientSelectedId = (clientsList.SelectedItem as Client).clientId;
+            listAccounts.ItemsSource = data.ClientsAccounts.Where(find);
+
             operationsList.Items.Refresh();
         }
     }

@@ -78,9 +78,9 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// </summary>
         /// <param name="AccountToClose"></param>
         /// <returns></returns>
-        public string closeAccount(Account AccountToClose)
+        public string closeAccount(Account AccountToClose, string Post)
         {
-            string result = FileOper.closeAccount(AccountToClose);
+            string result = FileOper.closeAccount(AccountToClose, Post);
             FileOper.GetInfoFromFile();
             return result;
         }
@@ -92,9 +92,9 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToPutSum"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
+        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum, string Post)
         {
-            string result = FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum);
+            string result = FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum, Post);
             FileOper.GetInfoFromFile();
             return result;
         }
@@ -105,9 +105,9 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToAddition"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public string additionAccount(Account AccountToAddition, double Sum)
+        public string additionAccount(Account AccountToAddition, double Sum, string Post)
         {
-            string result = FileOper.additionAccount(AccountToAddition, Sum);
+            string result = FileOper.additionAccount(AccountToAddition, Sum, Post);
             FileOper.GetInfoFromFile();
             return result;
         }

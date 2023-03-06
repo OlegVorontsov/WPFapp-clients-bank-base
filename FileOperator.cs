@@ -14,6 +14,9 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         public List<Account> AccountsBase = new List<Account>();
 
         public event Action<Account, string> AccountWasOpen;
+        public event Action<Account, string> AccountWasClosed;
+        public event Action<Account, double, string> AccountWasRefilled;
+        public event Action<Account, Account, double, string> TransferWasDone;
 
         /// <summary>
         /// Конструктор
@@ -123,9 +126,10 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// </summary>
         /// <param name="AccountToClose"></param>
         /// <returns></returns>
-        public string closeAccount(Account AccountToClose)
+        public string closeAccount(Account AccountToClose, string Post)
         {
             AccountsBase.Remove(AccountToClose);
+            AccountWasClosed?.Invoke(AccountToClose, Post);
             PutInfoIntoFile();
             return "Счет закрыт";
         }
@@ -137,12 +141,13 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToPutSum"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum)
+        public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum, string Post)
         {
             if ((AccountToGetSum.sum - Sum) >= 0)
             {
                 AccountToGetSum.sum -= Sum;
                 AccountToPutSum.sum += Sum;
+                TransferWasDone?.Invoke(AccountToGetSum, AccountToPutSum, Sum, Post);
                 PutInfoIntoFile();
                 return "Средства переведены";
             }
@@ -158,9 +163,10 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <param name="AccountToAddition"></param>
         /// <param name="Sum"></param>
         /// <returns></returns>
-        public string additionAccount(Account AccountInWork, double Sum)
+        public string additionAccount(Account AccountInWork, double Sum, string Post)
         {
             AccountInWork.sum += Sum;
+            AccountWasRefilled?.Invoke(AccountInWork, Sum, Post);
             PutInfoIntoFile();
             return "Счет пополнен";
         }

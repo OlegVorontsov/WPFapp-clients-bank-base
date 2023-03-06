@@ -20,7 +20,10 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             fileOper = fileOperator;
             readFile();
 
-            fileOperator.AccountWasOpen += makeNote;
+            fileOperator.AccountWasOpen += makeNoteOpen;
+            fileOperator.AccountWasClosed += makeNoteClose;
+            fileOperator.AccountWasRefilled += makeNoteRefill;
+            fileOperator.TransferWasDone += makeNoteTransfer;
         }
 
         /// <summary>
@@ -28,6 +31,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// </summary>
         private void readFile()
         {
+            Lines.Clear();
             using (StreamReader sr = new StreamReader(path))
             {
                 while (!sr.EndOfStream)
@@ -43,7 +47,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// Запись в журнале об открытии счета
         /// </summary>
         /// <param name="AccountOpened"></param>
-        private void makeNote(Account AccountOpened, string Post)
+        private void makeNoteOpen(Account AccountOpened, string Post)
         {
             using (StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8))
             {
@@ -58,7 +62,94 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
                        $"{Post}";
                 sw.WriteLine(line);
             }
-            MessageBox.Show("Счет открыт");
+            MessageBox.Show($"Счет {AccountOpened.accountId} открыт");
+            readFile();
+        }
+
+        /// <summary>
+        /// Запись в журнале о закрытии счета
+        /// </summary>
+        /// <param name="AccountClosed"></param>
+        /// <param name="Post"></param>
+        private void makeNoteClose(Account AccountClosed, string Post)
+        {
+            using (StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8))
+            {
+                string line = string.Empty;
+                string nowDate = DateTime.Now.ToShortDateString();
+                string nowTime = DateTime.Now.ToShortTimeString();
+                string dateAndTime = $"{nowDate} {nowTime}";
+                line = $"{AccountClosed.accountId}#" +
+                        "закрытие#" +
+                        "0#" +
+                       $"{dateAndTime}#" +
+                       $"{Post}";
+                sw.WriteLine(line);
+            }
+            MessageBox.Show($"Счет {AccountClosed.accountId} закрыт");
+            readFile();
+        }
+
+        /// <summary>
+        /// Запись в журнале о пополнении счета
+        /// </summary>
+        /// <param name="AccountRefilled"></param>
+        /// <param name="Sum"></param>
+        /// <param name="Post"></param>
+        private void makeNoteRefill(Account AccountRefilled, double Sum, string Post)
+        {
+            using (StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8))
+            {
+                string line = string.Empty;
+                string nowDate = DateTime.Now.ToShortDateString();
+                string nowTime = DateTime.Now.ToShortTimeString();
+                string dateAndTime = $"{nowDate} {nowTime}";
+                line = $"{AccountRefilled.accountId}#" +
+                        "пополнение#" +
+                       $"{Sum}#" +
+                       $"{dateAndTime}#" +
+                       $"{Post}";
+                sw.WriteLine(line);
+            }
+            MessageBox.Show($"Счет {AccountRefilled.accountId} пополнен на сумму {Sum}");
+            readFile();
+        }
+
+        /// <summary>
+        /// Запись в журнале о переводе между счетами
+        /// </summary>
+        /// <param name="AccountDecreased"></param>
+        /// <param name="AccountIncreased"></param>
+        /// <param name="Sum"></param>
+        /// <param name="Post"></param>
+        private void makeNoteTransfer(Account AccountDecreased, Account AccountIncreased, double Sum, string Post)
+        {
+            using (StreamWriter sw = new StreamWriter(path, true, Encoding.UTF8))
+            {
+                string lineDecrease = string.Empty;
+                string nowDate1 = DateTime.Now.ToShortDateString();
+                string nowTime1 = DateTime.Now.ToShortTimeString();
+                string dateAndTime1 = $"{nowDate1} {nowTime1}";
+                lineDecrease = $"{AccountDecreased.accountId}#" +
+                                "перевод#" +
+                               $"-{Sum}#" +
+                               $"{dateAndTime1}#" +
+                               $"{Post}";
+                sw.WriteLine(lineDecrease);
+
+                string lineIncrease = string.Empty;
+                string nowDate2 = DateTime.Now.ToShortDateString();
+                string nowTime2 = DateTime.Now.ToShortTimeString();
+                string dateAndTime2 = $"{nowDate2} {nowTime2}";
+                lineDecrease = $"{AccountIncreased.accountId}#" +
+                                "перевод#" +
+                               $"+{Sum}#" +
+                               $"{dateAndTime2}#" +
+                               $"{Post}";
+                sw.WriteLine(lineDecrease); 
+            }
+            MessageBox.Show($"Со счета {AccountDecreased.accountId} на счет {AccountIncreased.accountId} переведена сумма {Sum}");
+            readFile();
         }
     }
 
