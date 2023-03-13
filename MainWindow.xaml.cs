@@ -58,7 +58,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         {
             accountSelected = listAccounts.SelectedItem as Account;
         }
-        //метод поиска счетов клинте
+        //метод поиска счетов клинта
         private bool find(Account arg)
         {
             return arg.clientId == (clientsList.SelectedItem as Client).clientId;
@@ -66,42 +66,44 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         //открытие депозитного счета + запись в журнале
         private void openDepositBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (postSelected != string.Empty)
+            var temp = openDepositBtn.Content;
+            string TypeAccount = Convert.ToString(temp);
+            try
             {
-                var temp = openDepositBtn.Content;
-                string TypeAccount = Convert.ToString(temp);
+                if (postSelected == string.Empty) throw new MyException("Должность не выбрана");
                 resultOfOperation.Text = data.openAccount(clientSelectedId, TypeAccount, postSelected);
             }
-            else
+            catch (MyException err)
             {
-                resultOfOperation.Text = "Выберете должность";
+                resultOfOperation.Text = $"{err.Message}";
             }
         }
         //открытие текущего счета + запись в журнале
         private void openCurrentBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (postSelected != string.Empty)
+            var temp = openCurrentBtn.Content;
+            string TypeAccount = Convert.ToString(temp);
+            try
             {
-                var temp = openCurrentBtn.Content;
-                string TypeAccount = Convert.ToString(temp);
+                if (postSelected == string.Empty) throw new MyException("Должность не выбрана");
                 resultOfOperation.Text = data.openAccount(clientSelectedId, TypeAccount, postSelected);
             }
-            else
+            catch (MyException err)
             {
-                resultOfOperation.Text = "Выберете должность";
+                resultOfOperation.Text = $"{err.Message}";
             }
         }
         //закрытие счета + запись в журнале
         private void closeAccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (postSelected != string.Empty)
+            try
             {
-                string Result = data.closeAccount(accountSelected, postSelected);
-                resultOfOperation.Text = Result;
+                if (postSelected == string.Empty) throw new MyException("Должность не выбрана");
+                resultOfOperation.Text = data.closeAccount(accountSelected, postSelected);
             }
-            else
+            catch (MyException err)
             {
-                resultOfOperation.Text = "Выберете должность";
+                resultOfOperation.Text = $"{err.Message}";
             }
         }
         //выбор счетов для перевода
@@ -129,55 +131,33 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         //перевод между счетами + запись в журнале
         private void transferSumBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (postSelected != string.Empty)
+            double Sum;
+            try
             {
-                double Sum;
-                if (double.TryParse(sumToTransfer.Text, out Sum))
-                {
-                    if (Sum > 0)
-                    {
-                        resultOfOperation.Text = data.transferSumBetweenAccounts(accountSource, accountDestination, Sum, postSelected);
-                    }
-                    else
-                    {
-                        resultOfOperation.Text = "Введите число > 0";
-                    }
-                }
-                else
-                {
-                    resultOfOperation.Text = "Введите число";
-                }
+                if (postSelected == string.Empty) throw new MyException("Должность не выбрана");
+                if (!double.TryParse(sumToTransfer.Text, out Sum)) throw new MyException("Неверный формат суммы");
+
+                resultOfOperation.Text = data.transferSumBetweenAccounts(accountSource, accountDestination, Sum, postSelected);
             }
-            else
+            catch (MyException err)
             {
-                resultOfOperation.Text = "Выберете должность";
+                resultOfOperation.Text = $"{err.Message}";
             }
         }
         //пополнение счета + запись в журнале
         private void additionAccountBtn_Click(object sender, RoutedEventArgs e)
         {
-            if (postSelected != string.Empty)
+            double Sum;
+            try
             {
-                double Sum;
-                if (double.TryParse(sumToAddition.Text, out Sum))
-                {
-                    if (Sum > 0)
-                    {
-                        resultOfOperation.Text = data.additionAccount(accountSelected, Sum, postSelected);
-                    }
-                    else
-                    {
-                        resultOfOperation.Text = "Введите число > 0";
-                    }
-                }
-                else
-                {
-                    resultOfOperation.Text = "Введите число";
-                }
+                if (postSelected == string.Empty) throw new MyException("Должность не выбрана");
+                if (!double.TryParse(sumToAddition.Text, out Sum)) throw new MyException("Неверный формат суммы");
+
+                resultOfOperation.Text = data.additionAccount(accountSelected, Sum, postSelected);
             }
-            else
+            catch (MyException err)
             {
-                resultOfOperation.Text = "Выберете должность";
+                resultOfOperation.Text = $"{err.Message}";
             }
         }
         //обновление списка счетов и журнала операций

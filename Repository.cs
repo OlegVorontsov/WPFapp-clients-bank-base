@@ -61,14 +61,8 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         public string openAccount(int ClientId, string TypeAccount, string Post)
         {
             string result = string.Empty;
-            if (ClientId == 0)
-            {
-                return "Выберете клиента";
-            }
-            else
-            {
-                result = FileOper.openAccount(ClientId, TypeAccount, Post);
-            }
+            if (ClientId == 0) throw new MyException("Клиент не выбран");
+            result = FileOper.openAccount(ClientId, TypeAccount, Post);
             FileOper.GetInfoFromFile();
             return result;
         }
@@ -94,6 +88,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <returns></returns>
         public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum, string Post)
         {
+            if (Sum <= 0) throw new MyException("Сумма перевода должна быть > 0");
             string result = FileOper.transferSumBetweenAccounts(AccountToGetSum, AccountToPutSum, Sum, Post);
             FileOper.GetInfoFromFile();
             return result;
@@ -107,6 +102,7 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <returns></returns>
         public string additionAccount(Account AccountToAddition, double Sum, string Post)
         {
+            if (Sum <= 0) throw new MyException("Сумма пополнения должна быть > 0");
             string result = FileOper.additionAccount(AccountToAddition, Sum, Post);
             FileOper.GetInfoFromFile();
             return result;

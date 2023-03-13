@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.32510.428
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "12.5_HomeWork_WPFapp clients bank base", "12.5_HomeWork_WPFapp clients bank base.csproj", "{B5131DA5-B014-4CDD-9A16-72A6FDC0E194}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "12.5_HomeWork_WPFapp clients bank base", "12.5_HomeWork_WPFapp clients bank base.csproj", "{B5131DA5-B014-4CDD-9A16-72A6FDC0E194}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

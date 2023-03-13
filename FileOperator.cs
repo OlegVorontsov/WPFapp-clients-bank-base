@@ -143,18 +143,12 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
         /// <returns></returns>
         public string transferSumBetweenAccounts(Account AccountToGetSum, Account AccountToPutSum, double Sum, string Post)
         {
-            if ((AccountToGetSum.sum - Sum) >= 0)
-            {
-                AccountToGetSum.sum -= Sum;
-                AccountToPutSum.sum += Sum;
-                TransferWasDone?.Invoke(AccountToGetSum, AccountToPutSum, Sum, Post);
-                PutInfoIntoFile();
-                return "Средства переведены";
-            }
-            else
-            {
-                return "Недостаточно средств";
-            }
+            if ((AccountToGetSum.sum - Sum) <= 0) throw new MyException("Недостаточно средств");
+            AccountToGetSum.sum -= Sum;
+            AccountToPutSum.sum += Sum;
+            TransferWasDone?.Invoke(AccountToGetSum, AccountToPutSum, Sum, Post);
+            PutInfoIntoFile();
+            return "Средства переведены";
         }
 
         /// <summary>

@@ -20,5 +20,6 @@ namespace _12._5_HomeWork_WPFapp_clients_bank_base
             this.name = Name;
             this.patronymic = Patronymic;
         }
+
     }
 }
